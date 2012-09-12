@@ -25,14 +25,12 @@ sigma = zeros(1, size(X, 2));
 %
 % Hint: You might find the 'mean' and 'std' functions useful.
 %       
+m = length(X);
+mu = mean(X);
+sigma = std(X);
 
-
-
-
-
-
-
-
+sub_mean = X - repmat(mu, m, 1);
+X_norm = sub_mean ./ repmat(sigma, m, 1);
 
 % ============================================================
 
