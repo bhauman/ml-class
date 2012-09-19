@@ -62,23 +62,75 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+accum = 0;
+a1 = [ones(m,1) X];
+z2 = a1 * Theta1';
+a2 = [ones(m,1) sigmoid(z2)];
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
+h_x = a3;
 
+%for i = 1:m
+%  y_i = (y(i) == 1:10);
+%  accum += sum((-y_i .* log(h_x(i,:))) - ((1 - y_i) .* log(1 - h_x(i, :))));
+%endfor
+% J = accum / m;
 
+ys = repmat(y, 1, num_labels) == repmat(1:num_labels, m, 1);
+un_regJ = -(sum(sum(ys .* log(h_x))) + sum(sum((1 - ys) .* log(1 - h_x)))) / m;
+% don't forget to strip the bias off
+regular_add = lambda .* (sum(sum(Theta1(:, 2:end) .^ 2)) + sum(sum(Theta2(:, 2:end) .^ 2))) ./ (2 * m);
 
+J = un_regJ + regular_add;
 
+delta_temp1 = zeros(size(Theta1));
+delta_temp2 = zeros(size(Theta2));
 
+theta2_node_size = size(Theta2(:, 2:end), 2);
 
+d_3 = a3 - ys; % 10 x 5000
+d_2 = (Theta2(:, 2:end)' * d_3')' .* sigmoidGradient(z2); % 25 * 5000
 
+%for i = 1:1000
+  % d_3 = a3(i, :) - ys(i, :);
+  % d_2 = (d_3(i,:) * Theta2(:, 2:end)) .* sigmoidGradient(z2(i,:))
 
+%  size(delta_temp2);  
+  
+%  a2mat = repmat(a2(i,:), size(Theta2, 1), 1) .* repmat(d_3(i,:), theta2_node_size, 1)';
+%  delta_temp2 = delta_temp2 + [zeros(size(Theta2,1), 1) a2mat];
 
+  %for i2 = 1:size(Theta2, 1)
+  %  for j2 = 2:theta2_node_size
+  %    delta_temp2(i2, j2) = delta_temp2(i2,j2) + a2(i,j2) * d_3(i, i2); 
+  %  endfor
+  % endfor
+  
+  
+%  a1mat = [zeros(size(Theta1,1), 1) repmat(X(i,:), size(Theta1, 1), 1)] .* repmat(d_2(i,:), size(Theta1, 2), 1)';
+%  delta_temp1 = delta_temp1 + a1mat;
 
+  %for i1 = 1:size(Theta1, 1)
+  %  for j1 = 2:(size(Theta1, 2) - 1)
+  %    delta_temp1(i1, j1) = delta_temp1(i1,j1) + X(i, j1 - 1) * d_2(i,i1); 
+  %  endfor
+  %endfor
 
+  % disp(delta_temp2);
+  %disp(delta_temp1)
+    
+%endfor
 
+dt2 = d_3' * a2;
 
+delta_temp2 = dt2;
 
+dt1 = d_2' * a1;
 
+delta_temp1 = dt1;
 
-
+Theta2_grad = delta_temp2 / m;
+Theta1_grad = delta_temp1 / m;
 
 % -------------------------------------------------------------
 
