@@ -122,15 +122,21 @@ d_2 = (Theta2(:, 2:end)' * d_3')' .* sigmoidGradient(z2); % 25 * 5000
 %endfor
 
 dt2 = d_3' * a2;
-
 delta_temp2 = dt2;
 
 dt1 = d_2' * a1;
-
 delta_temp1 = dt1;
 
-Theta2_grad = delta_temp2 / m;
-Theta1_grad = delta_temp1 / m;
+theta1_reg = Theta1;
+theta1_reg(:,1) = 0; % zero out first column
+theta1_reg = (lambda / m) * theta1_reg;
+
+theta2_reg = Theta2;
+theta2_reg(:,1) = 0; % zero out first column
+theta2_reg = (lambda / m) * theta2_reg;
+
+Theta2_grad = (delta_temp2 / m) + theta2_reg;
+Theta1_grad = (delta_temp1 / m) + theta1_reg;
 
 % -------------------------------------------------------------
 

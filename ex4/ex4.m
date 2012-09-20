@@ -134,20 +134,19 @@ initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
 % Unroll parameters
 initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 
-
 %% =============== Part 7: Implement Backpropagation ===============
 %  Once your cost matches up with ours, you should proceed to implement the
 %  backpropagation algorithm for the neural network. You should add to the
 %  code you've written in nnCostFunction.m to return the partial
 %  derivatives of the parameters.
 %
-fprintf('\nChecking Backpropagation... \n');
+% fprintf('\nChecking Backpropagation... \n');
 
 %  Check gradients by running checkNNGradients
-checkNNGradients;
+% checkNNGradients;
 
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
 
 
 %% =============== Part 8: Implement Regularization ===============
@@ -158,18 +157,18 @@ pause;
 fprintf('\nChecking Backpropagation (w/ Regularization) ... \n')
 
 %  Check gradients by running checkNNGradients
-lambda = 3;
-checkNNGradients(lambda);
+% lambda = 3;
+% checkNNGradients(lambda);
 
 % Also output the costFunction debugging values
-debug_J  = nnCostFunction(nn_params, input_layer_size, ...
-                          hidden_layer_size, num_labels, X, y, lambda);
+% debug_J  = nnCostFunction(nn_params, input_layer_size, ...
+%                          hidden_layer_size, num_labels, X, y, lambda);
 
-fprintf(['\n\nCost at (fixed) debugging parameters (w/ lambda = 10): %f ' ...
-         '\n(this value should be about 0.576051)\n\n'], debug_J);
+% fprintf(['\n\nCost at (fixed) debugging parameters (w/ lambda = 10): %f ' ...
+%         '\n(this value should be about 0.576051)\n\n'], debug_J);
 
-fprintf('Program paused. Press enter to continue.\n');
-pause;
+% fprintf('Program paused. Press enter to continue.\n');
+% pause;
 
 
 %% =================== Part 8: Training NN ===================
@@ -183,10 +182,10 @@ fprintf('\nTraining Neural Network... \n')
 
 %  After you have completed the assignment, change the MaxIter to a larger
 %  value to see how more training helps.
-options = optimset('MaxIter', 50);
+options = optimset('MaxIter', 400);
 
 %  You should also try different values of lambda
-lambda = 1;
+lambda = 0.5;
 
 % Create "short hand" for the cost function to be minimized
 costFunction = @(p) nnCostFunction(p, ...
