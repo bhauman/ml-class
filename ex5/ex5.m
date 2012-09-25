@@ -85,6 +85,8 @@ pause;
 lambda = 0;
 [theta] = trainLinearReg([ones(m, 1) X], y, lambda);
 
+
+disp(theta);
 %  Plot fit over the data
 plot(X, y, 'rx', 'MarkerSize', 10, 'LineWidth', 1.5);
 xlabel('Change in water level (x)');
